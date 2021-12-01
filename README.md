@@ -6,4 +6,3 @@ A demo project performed by a group of students in semester 20211 for course **I
 2. Ngô Văn Quang :vietnam:
 3. Đỗ Hoàng Dũng :vietnam:
 4. Nguyễn Vũ Đức :vietnam:
-5. ...
