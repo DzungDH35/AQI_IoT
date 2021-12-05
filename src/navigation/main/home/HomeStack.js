@@ -1,6 +1,4 @@
 import React from 'react';
-import { StyleSheet, View, Text, StatusBar } from 'react-native';
-import { Header } from '@components/header/Header';
 
 // Fragments
 import { LocationFragment } from '@features/home/Location';
@@ -8,16 +6,19 @@ import { DeviceFragment } from '@features/home/Device';
 import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen'
 import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
+
 // Navigation modules
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
-const TabTop = createMaterialTopTabNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
 const LocationStack = () => {
     return (
-        <Stack.Navigator initialRouteName={'AQIDetailsScreen'}>
+        <Stack.Navigator 
+            initialRouteName={'LocationFragment'}>
+                
             <Stack.Screen
                 options={{
                     headerShown: false
@@ -50,13 +51,13 @@ const LocationStack = () => {
     );
 };
 
-const HomeNavigator = () => {
+const HomeStack = () => {
     return (
-        <TabTop.Navigator>
-            <TabTop.Screen name="Locations" component={LocationStack} />
-            <TabTop.Screen name="Devices" component={DeviceFragment} />
-        </TabTop.Navigator>
+        <TopTab.Navigator>
+            <TopTab.Screen name="Locations" component={LocationStack} />
+            <TopTab.Screen name="Devices" component={DeviceFragment} />
+        </TopTab.Navigator>
     )
-}
+};
 
-export default HomeNavigator;
+export default HomeStack;
