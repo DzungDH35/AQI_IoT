@@ -11,7 +11,8 @@ module.exports = {
           '@redux': './src/redux/',
           '@api': './src/api/',
           '@features': './src/features/',
-          '@components': './src/components/',      
+          '@components': './src/components/',
+          '@navigation': './src/navigation/'
         }
       }
     ]
