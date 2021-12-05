@@ -58,9 +58,9 @@ const MainStack = () => {
 					);
 				},
 			})}>
-			<BottomTab.Screen name="HomeStack" component={HomeStack} />
-			<BottomTab.Screen name="MapStack" component={MapStack} />
-			<BottomTab.Screen name="AccountStack" component={AccountStack} />
+			<BottomTab.Screen name="Home" component={HomeStack} />
+			<BottomTab.Screen name="Map" component={MapStack} />
+			<BottomTab.Screen name="Account" component={AccountStack} />
 		</BottomTab.Navigator>
 	);
 };
