@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Image, TextInput, ImageBackgroundBase, ImageBackground, Dimensions, Pressable, Button, PointPropType } from 'react-native';
 import { scale, ScaledSheet } from 'react-native-size-matters';
-import PrimaryButton from "@components/common/general/PrimaryButton";
+import PrimaryButton from "@components/common/PrimaryButton";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from '../../../shared/colors/index'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

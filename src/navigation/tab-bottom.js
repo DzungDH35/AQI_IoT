@@ -6,9 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors } from '@shared/colors/index';
 import { scale } from 'react-native-size-matters';
 import AQIScreen from '@features/AQI/AQIScreen';
-import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen'
-import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
-import InforAQIScreen from '@features/AQI/InforAQIScreen';
+
+import HomeNavigator from '@navigation/home/home';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -19,40 +18,41 @@ const EmptyScreen = () => {
     </View>
   );
 };
-const HomeStack = () => {
-  return (
-    <Stack.Navigator initialRouteName={'AQIScreen'}>
-      <Stack.Screen
-        // options={{
-        //   headerShown: false
-        // }}
-        name={'AQIScreen'}
-        component={AQIScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={'AQIDetailsScreen'}
-        component={AQIDetailsScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={'DetailsInforScreen'}
-        component={DetailsInforScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={'InforAQIScreen'}
-        component={InforAQIScreen}
-      />
-    </Stack.Navigator>
-  );
-};
+
+// const HomeStack = () => {
+//   return (
+//     <Stack.Navigator initialRouteName={'AQIScreen'}>
+//       <Stack.Screen
+//         // options={{
+//         //   headerShown: false
+//         // }}
+//         name={'AQIScreen'}
+//         component={AQIScreen}
+//       />
+//       <Stack.Screen
+//         options={{
+//           headerShown: false
+//         }}
+//         name={'AQIDetailsScreen'}
+//         component={AQIDetailsScreen}
+//       />
+//       <Stack.Screen
+//         options={{
+//           headerShown: false
+//         }}
+//         name={'DetailsInforScreen'}
+//         component={DetailsInforScreen}
+//       />
+//       <Stack.Screen
+//         options={{
+//           headerShown: false
+//         }}
+//         name={'InforAQIScreen'}
+//         component={InforAQIScreen}
+//       />
+//     </Stack.Navigator>
+//   );
+// };
 
 const MapStack = () => {
   return (
@@ -62,13 +62,13 @@ const MapStack = () => {
   );
 };
 
-const StatisticalStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name={'StatisticalScreen'} component={EmptyScreen} />
-    </Stack.Navigator>
-  );
-};
+// const StatisticalStack = () => {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen name={'StatisticalScreen'} component={EmptyScreen} />
+//     </Stack.Navigator>
+//   );
+// };
 
 const AccountStack = () => {
   return (
@@ -125,9 +125,9 @@ const TabBottomNavigator = () => {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Map" component={MapStack} />
-      <Tab.Screen name="Statistical" component={StatisticalStack} />
+      {/* <Tab.Screen name="Statistical" component={StatisticalStack} /> */}
       <Tab.Screen name="Account" component={AccountStack} />
     </Tab.Navigator>
   );
