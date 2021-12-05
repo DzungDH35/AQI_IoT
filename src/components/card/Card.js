@@ -1,20 +1,50 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import GreenFace from '@assets/icons/face-green.svg';
+import { Aqi } from '@models/Aqi';
+import { FaceStatus } from '@components/card/FaceStatus';
 
 const styles = StyleSheet.create({
 	container: {
+		backgroundColor: '#fff',
+		borderRadius: 7,
 		flexDirection: 'row',
-		width: '100%',
-		borderWidth: 1,
+		overflow: 'hidden',
+		shadowColor: "#000",
+		width: '100%'
+	},
+	containerShadow: {
+		elevation: 2,
+		shadowOffset: {
+			width: 0,
+			height: 1,
+		},
+		shadowOpacity: 0.22,
+		shadowRadius: 2.22
 	},
 	leftInfoWrapper: {
 		alignItems: 'center',
+		backgroundColor: '#a8e05f',
+		width: "35%",
 		justifyContent: 'center',
-		flexBasis: '30%',
-		paddingVertical: 10,
-		backgroundColor: '#a8e05f'
+		paddingHorizontal: 8,
+		paddingVertical: 10
+	},
+	textStatus: {
+		fontSize: 18,
+		fontWeight: '700',
+		textAlign: 'center'
+	},
+	faceStatus: {
+		marginTop: 12
+	},
+	aqiNumber: {
+		fontSize: 23,
+		fontWeight: '700',
+		textAlign: 'center'
+	},
+	aqiUnit: {
+		fontSize: 10,
+		textAlign: 'center'
 	},
 	rightInfoWrapper: {
 		paddingHorizontal: 20,
@@ -31,16 +61,22 @@ const styles = StyleSheet.create({
 });
 
 export class Card extends React.Component {
+
+	// will replace with new Aqi(this.props.aqi)
+	aqiObject = new Aqi(13);
+	#aqiLevel = this.aqiObject.getLevelOfAqi();
+	#status = this.aqiObject.getStatus();
+	#aqi = this.aqiObject.getAqi();
+
 	render() {
 		return (
-			<View style={[styles.container, this.props.style]}>
+			<View style={[styles.container, styles.containerShadow, this.props.style]}>
 				<View style={styles.leftInfoWrapper}>
-					<Text>Good</Text>
-					<Icon name="comments" size={30} color="#900" />
-					<GreenFace/>
+					<Text style={styles.textStatus}>{this.#status}</Text>
+					<FaceStatus status={this.#aqiLevel} style={styles.faceStatus}/>
 					<View>
-						<Text>104</Text>
-						<Text>US AQI</Text>
+						<Text style={styles.aqiNumber}>{this.#aqi}</Text>
+						<Text style={styles.aqiUnit}>US AQI</Text>
 					</View>
 				</View>
 				<View>
