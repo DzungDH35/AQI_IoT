@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Aqi } from '@models/Aqi';
 import { FaceStatus } from '@components/card/FaceStatus';
+import { Colors } from '@shared/colors';
 
 const styles = StyleSheet.create({
 	container: {
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
 	},
 	leftInfoWrapper: {
 		alignItems: 'center',
-		backgroundColor: '#a8e05f',
+		backgroundColor: Colors.GOOD,
 		width: "35%",
 		justifyContent: 'center',
 		paddingHorizontal: 8,

@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, ImageBackgroundBase, ImageBackground, Dim
 import { scale, ScaledSheet } from 'react-native-size-matters';
 import PrimaryButton from "@components/common/PrimaryButton";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from '../../../shared/colors/index'
+import { Colors } from '@shared/colors'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const { width, height } = Dimensions.get('window')
 

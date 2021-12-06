@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 
 // Fragments
 import { LocationFragment } from '@features/home/Location';
@@ -8,8 +9,8 @@ import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
 
 // Navigation modules
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const Stack = createStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -51,11 +52,21 @@ const LocationStack = () => {
     );
 };
 
+const styles = StyleSheet.create({
+    tabBarLabel: {
+        fontSize: 16,
+        textTransform: 'none'
+    }
+});
+
 const HomeStack = () => {
     return (
-        <TopTab.Navigator>
-            <TopTab.Screen name="Locations" component={LocationStack} />
-            <TopTab.Screen name="Devices" component={DeviceFragment} />
+        <TopTab.Navigator
+            screenOptions={{
+                tabBarLabelStyle: styles.tabBarLabel,
+            }}>
+            <TopTab.Screen name="Locations" component={LocationStack}/>
+            <TopTab.Screen name="Devices" component={DeviceFragment}/>
         </TopTab.Navigator>
     )
 };

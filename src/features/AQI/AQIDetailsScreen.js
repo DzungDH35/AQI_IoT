@@ -13,7 +13,7 @@ import {
 import { scale, ScaledSheet } from 'react-native-size-matters';
 // import PrimaryButton from "@components/common/general/PrimaryButton";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from '../../../shared/colors/index'
+import { Colors } from '@shared/colors'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
