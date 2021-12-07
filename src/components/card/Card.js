@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { Aqi } from '@models/AirQuality';
+import { AqiQuality } from '@models/AirQuality';
 import { FaceStatus } from '@components/card/FaceStatus';
 import { Colors } from '@shared/colors';
+
+import { mockAirQuality } from '@shared/mock-data';
+import { AirQuality } from '../../models/AirQuality';
 
 const styles = StyleSheet.create({
 	container: {
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
 export class Card extends React.Component {
 
 	// will replace with new Aqi(this.props.aqi)
-	aqiObject = new Aqi(13);
+	aqiObject = new AirQuality(mockAirQuality['Hazardous']);
 	#aqiLevel = this.aqiObject.getLevelOfAqi();
 	#status = this.aqiObject.getStatus();
 	#aqi = this.aqiObject.getAqi();

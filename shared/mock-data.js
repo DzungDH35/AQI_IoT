@@ -1,4 +1,4 @@
-const airQuality = {
+const mockAirQuality = {
    "Good": {
       pollutants: {
          so2: 10,
@@ -77,4 +77,8 @@ const airQuality = {
       location: "Hà Nội",
       time: null
    }
+};
+
+export {
+   mockAirQuality
 };
