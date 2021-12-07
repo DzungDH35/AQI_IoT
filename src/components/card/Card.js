@@ -6,6 +6,8 @@ import { Colors } from '@shared/colors';
 
 import { mockAirQuality } from '@shared/mock-data';
 import { AirQuality } from '../../models/AirQuality';
+import { color } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
 	container: {
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 10
 	},
 	textStatus: {
-		fontSize: 18,
+		fontSize: 14,
 		fontWeight: '700',
 		textAlign: 'center'
 	},
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	rightInfoWrapper: {
+		flexGrow: 1,
 		paddingHorizontal: 20,
 		paddingVertical: 8
 	},
@@ -60,36 +63,73 @@ const styles = StyleSheet.create({
 	},
 	location2: {
 		fontSize: 14
+	},
+	detailWrapper: {
+		flexDirection: 'row',
+		height: 80
+	},
+	time: {
+		fontSize: 10,
+		textAlign: 'center'
+	},
+	angleRight: {
+		bottom: 8,
+		position: 'absolute',
+		right: 8
 	}
-	
 });
 
 export class Card extends React.Component {
 
-	// will replace with new Aqi(this.props.aqi)
-	aqiObject = new AirQuality(mockAirQuality['Hazardous']);
-	#aqiLevel = this.aqiObject.getLevelOfAqi();
-	#status = this.aqiObject.getStatus();
-	#aqi = this.aqiObject.getAqi();
+	aqiObject = new AirQuality(mockAirQuality['Unhealthy1']);
+	aqiLevel = this.aqiObject.getLevelOfAqi();
+	status = this.aqiObject.getStatus();
+	aqi = this.aqiObject.getAqi();
+
+	getLeftInfoWrapperBackground() {
+		let aqiColor;
+		switch (this.aqiLevel) {
+			case 0:
+				aqiColor = Colors.GOOD; break;
+			case 1:
+				aqiColor = Colors.MODERATE; break;
+			case 2:
+				aqiColor = Colors.UNHEALTHY_1; break;
+			case 3:
+				aqiColor = Colors.UNHEALTHY_2; break;
+			case 4:
+				aqiColor = Colors.UNHEALTHY_3; break;
+			case 5:
+				aqiColor = Colors.HAZARDOUS; break;
+		}
+		return {
+			backgroundColor: aqiColor
+		}
+	}
 
 	render() {
 		return (
 			<View style={[styles.container, styles.containerShadow, this.props.style]}>
-				<View style={styles.leftInfoWrapper}>
-					<Text style={styles.textStatus}>{this.#status}</Text>
-					<FaceStatus status={this.#aqiLevel} style={styles.faceStatus}/>
+				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackground()]}>
+					<Text style={styles.textStatus}>{this.status}</Text>
+					<FaceStatus status={this.aqiLevel} style={styles.faceStatus}/>
 					<View>
-						<Text style={styles.aqiNumber}>{this.#aqi}</Text>
+						<Text style={styles.aqiNumber}>{this.aqi}</Text>
 						<Text style={styles.aqiUnit}>US AQI</Text>
 					</View>
 				</View>
-				<View>
-					<View style={styles.rightInfoWrapper}>
+				<View style={styles.rightInfoWrapper}>
+					<View>
 						<Text style={styles.location1}>Hà nội: Trường Chinh</Text>
 						<Text style={styles.location2}>Hanoi, Vietnam</Text>
 					</View>
-					<View></View>
-					<View></View>
+					<View style={styles.detailWrapper}>
+						<Text>Hello</Text>
+						<Text>Hello</Text>
+						<Text>Hello</Text>
+					</View>
+					<Text style={styles.time}>Dec 6, 12:45</Text>
+					<Icon style={styles.angleRight} name="angle-right" size={15}/>
 				</View>
 			</View>
 		);

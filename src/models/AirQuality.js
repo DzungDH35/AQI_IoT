@@ -83,7 +83,7 @@ export class AirQuality {
 			case 1:
 				return "Moderate";
 			case 2:
-				return "Unhealthy for Sensitive Groups";
+				return "Unhealthy for sensitive groups";
 			case 3:
 				return "Unhealthy";
 			case 4:
