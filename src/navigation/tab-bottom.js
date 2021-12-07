@@ -8,6 +8,8 @@ import { scale } from 'react-native-size-matters';
 import AQIScreen from '@features/AQI/AQIScreen';
 
 import HomeNavigator from '@navigation/home/home';
+import Chart from '@components/chart/Chart';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -57,8 +59,13 @@ const EmptyScreen = () => {
 const MapStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'MapScreen'} component={EmptyScreen} />
-    </Stack.Navigator>
+      <Stack.Screen 
+      options={{
+        headerShown: false
+      }} 
+      name={'MapScreen'} 
+      component={Chart} />
+    </Stack.Navigator >
   );
 };
 
@@ -80,6 +87,7 @@ const AccountStack = () => {
 const TabBottomNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName={'Map'}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
@@ -127,7 +135,6 @@ const TabBottomNavigator = () => {
       })}>
       <Tab.Screen name="Home" component={HomeNavigator} />
       <Tab.Screen name="Map" component={MapStack} />
-      {/* <Tab.Screen name="Statistical" component={StatisticalStack} /> */}
       <Tab.Screen name="Account" component={AccountStack} />
     </Tab.Navigator>
   );
