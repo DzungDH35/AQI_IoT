@@ -4,16 +4,16 @@ export class AirQuality {
 	#location = null;
 	#time = null;
 
-	constructor(airData = {}) {
-		this.setSo2(airData.so2);
-		this.setNo2(airData.so2);
-		this.setCo(airData.so2);
-		this.setO3(airData.so2);
-		this.setPm2_5(airData.so2);
-		this.setPm10(airData.so2);
-		this.setAqi(airData.aqi);
-		this.setLocation(airData.location);
-		this.setTime(airData.time);
+	constructor(data = {}) {
+		this.setSo2(data.so2);
+		this.setNo2(data.no2);
+		this.setCo(data.co);
+		this.setO3(data.o3);
+		this.setPm2_5(data.pm2_5);
+		this.setPm10(data.pm10);
+		this.setAqi(data.aqi);
+		this.setLocation(data.location);
+		this.setTime(data.time);
 	}
 
 	getSo2() { return this.#pollutants.so2; }

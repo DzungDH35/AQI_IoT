@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { Aqi } from '@models/Aqi';
+import { Aqi } from '@models/AirQuality';
 import { FaceStatus } from '@components/card/FaceStatus';
 import { Colors } from '@shared/colors';
 
