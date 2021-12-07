@@ -19,7 +19,7 @@ export const Colors = {
     UNHEALTHY_1: '#ff9b57',
     UNHEALTHY_2: '#fe6a69',
     UNHEALTHY_3: '#a97abc',
-    HAZARDOUS: '#a87383',
+    HAZARDOUS: '#a87383'
 }
 
 // 1. green (Good) : #a8e05f

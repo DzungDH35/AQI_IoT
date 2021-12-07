@@ -47,7 +47,7 @@ const mockAirQuality = {
          pm2_5: 20,
          pm10: 100
       },
-      aqi: 250,
+      aqi: 200,
       location: "Hà Nội",
       time: null
    },
@@ -60,7 +60,7 @@ const mockAirQuality = {
          pm2_5: 20,
          pm10: 100
       },
-      aqi: 320,
+      aqi: 300,
       location: "Hà Nội",
       time: null
    },
