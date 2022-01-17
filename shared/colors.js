@@ -14,12 +14,12 @@ export const Colors = {
     ORANG_SECOND: '#EE9A00',
     RED: '#FF0000',
     RED_SECOND: '#EE0000',
-    GOOD_COLOR: '#a8e05f',
-    MODERATE_COLOR: '#fdd64b',
-    UNHEALTHY1_COLOR: '#ff9b57',
-    UNHEALTHY2_COLOR: '#fe6a69',
-    UNHEALTHY3_COLOR: '#a97abc',
-    HAZARDOUS_COLOR: '#a87383',
+    GOOD: '#a8e05f',
+    MODERATE: '#fdd64b',
+    UNHEALTHY_1: '#ff9b57',
+    UNHEALTHY_2: '#fe6a69',
+    UNHEALTHY_3: '#a97abc',
+    HAZARDOUS: '#a87383'
 }
 
 // 1. green (Good) : #a8e05f

@@ -12,7 +12,8 @@ module.exports = {
           '@api': './src/api/',
           '@features': './src/features/',
           '@components': './src/components/',
-          '@navigation': './src/navigation/',      
+          '@navigation': './src/navigation/',
+          '@models': './src/models/'
         }
       }
     ]

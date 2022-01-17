@@ -6,7 +6,7 @@ import {
   ViewStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {Colors} from '../../../shared/colors/index';
+import {Colors} from '@shared/colors/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScaledSheet} from 'react-native-size-matters';
 import {TouchableOpacity} from 'react-native-gesture-handler';

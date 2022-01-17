@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, Image, TextInput, ImageBackgroundBase, ImageBackground, Dimensions, Pressable, Button, PointPropType } from 'react-native';
 import { scale, ScaledSheet } from 'react-native-size-matters';
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from '@shared/colors/index'
+import { Colors } from '@shared/colors'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width, height } = Dimensions.get('window')

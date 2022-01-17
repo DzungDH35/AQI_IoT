@@ -1,0 +1,24 @@
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text } from 'react-native';
+import Chart from '@components/chart/Chart';
+
+const Stack = createStackNavigator();
+
+const EmptyScreen = () => {
+	return (
+		<View style={{ flex: 1 }}>
+			<Text>Đây là màn hình thử nghiệm!</Text>
+		</View>
+	);
+};
+
+const MapStack = () => {
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name={'MapScreen'} component={Chart} />
+		</Stack.Navigator>
+	);
+};
+
+export default MapStack;

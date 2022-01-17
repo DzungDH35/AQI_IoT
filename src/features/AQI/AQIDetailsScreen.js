@@ -13,7 +13,7 @@ import {
 import { scale, ScaledSheet } from 'react-native-size-matters';
 // import PrimaryButton from "@components/common/general/PrimaryButton";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from '../../../shared/colors/index'
+import { Colors } from '@shared/colors'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -167,33 +167,7 @@ const AQIScreen = ({ navigation }) => {
             </View >
 
             {/* BIỂU ĐỒ AQI VÀ CÁC CHẤT KHÁC */}
-            <View style={styles.AQIChart}>
-                <Text style={styles.pollutantsText}>AQI</Text>
-                <LineChart
-                    data={data}
-                    width={width - 10} // from react-native
-                    height={220}
-                    yAxisInterval={1} // optional, defaults to 1
-                    chartConfig={chartConfig}
-                    bezier
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                    }}
-                />
-
-                <BarChart
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                    }}
-                    data={data}
-                    width={width - 10}
-                    height={220}
-                    chartConfig={chartConfig}
-                    verticalLabelRotation={30}
-                />
-            </View>
+            
 
 
         </ScrollView >
