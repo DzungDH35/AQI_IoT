@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Header } from '@components/header/Header';
 import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
+import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen';
 // import LoginScreen from '@features/auth/LoginScreen'
 // import SignUpScreen from '@features/auth/SignUpScreen';
 import MainStack from '@navigation/main/MainStack';
@@ -19,7 +20,7 @@ const App = () => {
 				screenOptions={{
 					headerShown: false
 				}}
-				initialRouteName={'MainStack'}>
+				initialRouteName={'AQIDetailsScreen'}>
 				{/* <Stack.Screen name="LoginScreen" component={LoginScreen}/>
 				<Stack.Screen name="SignUpScreen" component={SignUpScreen}/> */}
 				<Stack.Screen name='MainStack' component={MainStack} />
@@ -37,6 +38,13 @@ const App = () => {
 					name={'InforAQIScreen'}
 					component={InforAQIScreen}
 				/>
+				<Stack.Screen
+                options={{
+                    headerShown: false
+                }}
+                name={'AQIDetailsScreen'}
+                component={AQIDetailsScreen}
+            />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

@@ -16,7 +16,7 @@ const EmptyScreen = () => {
 const MapStack = () => {
 	return (
 		<Stack.Navigator>
-			<Stack.Screen name={'MapScreen'} component={Chart} />
+			<Stack.Screen name={'MapScreen'} component={EmptyScreen} />
 		</Stack.Navigator>
 	);
 };

@@ -66,7 +66,7 @@ const InforAQIScreen = ({ navigation }) => {
             <View style={styles.header}>
                 <Ionicons name={'ios-close-outline'}
                     color={Colors.PRIMARY_COLOR}
-                    size={50}
+                    size={32}
                     style={styles.closeIcon}
                     onPress={clickDetails} />
                 <Text style={styles.headerText}>AQI là gì?</Text>
@@ -95,18 +95,18 @@ const styles = ScaledSheet.create({
     header: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: '40@s',
-        borderBottomWidth: 1.5,
-        borderBottomColor: Colors.PRIMARY_COLOR
+        height: '50@s',
+        borderBottomWidth: '0.8@s',
+        borderBottomColor: Colors.PRIMARY_COLOR,
     },
     headerText: {
-        fontSize: 18,
+        fontSize: 24,
         color: 'black',
         fontWeight: 'bold',
     },
     closeIcon: {
         position: 'absolute',
-        left: 0,
+        right: 5,
     },
     content: {
         paddingVertical: '10@s',
