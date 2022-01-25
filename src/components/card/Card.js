@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { AqiQuality } from '@models/AirQuality';
 import { FaceStatus } from '@components/card/FaceStatus';
 import { Colors } from '@shared/colors';
@@ -8,6 +8,7 @@ import { mockAirQuality } from '@shared/mock-data';
 import { AirQuality } from '../../models/AirQuality';
 import { color } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/core';
 
 const styles = StyleSheet.create({
 	container: {
@@ -38,7 +39,8 @@ const styles = StyleSheet.create({
 	textStatus: {
 		fontSize: 14,
 		fontWeight: '700',
-		textAlign: 'center'
+		textAlign: 'center',
+		color: Colors.TEXT_NORMAL
 	},
 	faceStatus: {
 		marginTop: 12
@@ -46,11 +48,14 @@ const styles = StyleSheet.create({
 	aqiNumber: {
 		fontSize: 23,
 		fontWeight: '700',
-		textAlign: 'center'
+		textAlign: 'center',
+		color: Colors.TEXT_NORMAL
 	},
 	aqiUnit: {
 		fontSize: 10,
-		textAlign: 'center'
+		textAlign: 'center',
+		color: Colors.TEXT_NORMAL
+
 	},
 	rightInfoWrapper: {
 		flexGrow: 1,
@@ -59,29 +64,35 @@ const styles = StyleSheet.create({
 	},
 	location1: {
 		fontWeight: 'bold',
-		fontSize: 18
+		fontSize: 18, 
+		color: Colors.TEXT_NORMAL
+
 	},
 	location2: {
-		fontSize: 14
+		color: Colors.TEXT_NORMAL,
+		fontSize: 14,
 	},
 	detailWrapper: {
 		flexDirection: 'row',
-		height: 80
+		height: 80,
+		color: Colors.TEXT_NORMAL
 	},
 	time: {
 		fontSize: 10,
-		textAlign: 'center'
+		textAlign: 'center',
+		color: Colors.TEXT_NORMAL
 	},
 	angleRight: {
 		bottom: 8,
 		position: 'absolute',
-		right: 8
+		right: 8, 
+		color: Colors.TEXT_NORMAL
 	}
 });
 
 export class Card extends React.Component {
 
-	aqiObject = new AirQuality(mockAirQuality['Unhealthy1']);
+	aqiObject = new AirQuality(mockAirQuality['Good']);
 	aqiLevel = this.aqiObject.getLevelOfAqi();
 	status = this.aqiObject.getStatus();
 	aqi = this.aqiObject.getAqi();
@@ -106,10 +117,15 @@ export class Card extends React.Component {
 			backgroundColor: aqiColor
 		}
 	}
-
+	
+	
 	render() {
 		return (
-			<View style={[styles.container, styles.containerShadow, this.props.style]}>
+			<TouchableOpacity 
+				style={[styles.container, styles.containerShadow, this.props.style]} 
+				onPress={()=>{}}
+				activeOpacity={0.8}
+			>
 				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackground()]}>
 					<Text style={styles.textStatus}>{this.status}</Text>
 					<FaceStatus status={this.aqiLevel} style={styles.faceStatus}/>
@@ -124,6 +140,8 @@ export class Card extends React.Component {
 						<Text style={styles.location2}>Hanoi, Vietnam</Text>
 					</View>
 					<View style={styles.detailWrapper}>
+						{/* nho style colors cho text la TEXT_NORMAL 
+						neu khong khi chuyen sang darkmode thi text chuyen thanh mau trang k nhin dc*/}
 						<Text>Hello</Text>
 						<Text>Hello</Text>
 						<Text>Hello</Text>
@@ -131,7 +149,7 @@ export class Card extends React.Component {
 					<Text style={styles.time}>Dec 6, 12:45</Text>
 					<Icon style={styles.angleRight} name="angle-right" size={15}/>
 				</View>
-			</View>
+			</TouchableOpacity>
 		);
 	}
 }

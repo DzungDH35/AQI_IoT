@@ -13,6 +13,7 @@ const BottomTab = createBottomTabNavigator();
 const MainStack = () => {
 	return (
 		<BottomTab.Navigator
+			initialRouteName={'Map'}
 			screenOptions={({ route }) => ({
 				headerShown: false,
 				tabBarShowLabel: false,

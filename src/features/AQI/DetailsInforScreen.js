@@ -40,17 +40,17 @@ const detailsInfor = [
 ]
 
 const DetailsInforScreen = ({ route, navigation }) => {
-    isLoading = false;
+    // isLoading = false;
     const index = route.params.index;
     const clickDetails = () => {
-        navigation.navigate({ name: 'AQIDetailsScreen' })
+        navigation.goBack();
     }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Ionicons name={'ios-close-outline'}
                     color={Colors.PRIMARY_COLOR}
-                    size={50}
+                    size={32}
                     style={styles.closeIcon}
                     onPress={clickDetails} />
                 <Text style={styles.headerText}>{detailsInfor[index].name}</Text>
@@ -67,7 +67,7 @@ const DetailsInforScreen = ({ route, navigation }) => {
                 {detailsInfor[index].anhHuongNganHan.map((item, key) => (
                     <Text key={key} style={styles.textContent}> {item} </Text>)
                 )}
-                <Text style={styles.textHeader}>Ảnh hưởng lâu dài:</Text>
+                <Text style={[styles.textHeader, {marginTop: 8}]}>Ảnh hưởng lâu dài:</Text>
                 {detailsInfor[index].anhHuongDaiHan.map((item, key) => (
                     <Text key={key} style={styles.textContent}> {item} </Text>)
                 )}
@@ -84,21 +84,22 @@ const styles = ScaledSheet.create({
     header: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: '40@s',
-        borderBottomWidth: 1.5,
-        borderBottomColor: Colors.PRIMARY_COLOR
+        height: '50@s',
+        borderBottomWidth: '0.8@s',
+        borderBottomColor: Colors.PRIMARY_COLOR,
+        // paddingVertical: '10@s'
     },
     headerText: {
-        fontSize: 18,
+        fontSize: 24,
         color: 'black',
         fontWeight: 'bold',
     },
     closeIcon: {
         position: 'absolute',
-        left: 0,
+        right: 5,
     },
     content: {
-        marginTop: '15@s',
+        paddingVertical: '10@s',
         marginHorizontal: '10@s',
         flex: 1,
     },
@@ -110,8 +111,9 @@ const styles = ScaledSheet.create({
     },
     textContent: {
         lineHeight: '20@s',
-        marginBottom: 10
+        // marginBottom: 10,
+        color: 'black',
+        fontSize: 15
     }
-
 })
-export default DetailsInforScreen
+export default DetailsInforScreen;

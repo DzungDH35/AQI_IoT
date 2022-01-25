@@ -15,6 +15,7 @@ target 'AQI_IoT' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'sp-react-native-mqtt', :path => '../node_modules/sp-react-native-mqtt'
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   target 'AQI_IoTTests' do
     inherit! :complete

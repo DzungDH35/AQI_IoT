@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 // Fragments
 import { LocationFragment } from '@features/home/Location';
 import { DeviceFragment } from '@features/home/Device';
-import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen'
+import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen';
 import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
 
@@ -17,8 +17,7 @@ const TopTab = createMaterialTopTabNavigator();
 
 const LocationStack = () => {
     return (
-        <Stack.Navigator 
-            initialRouteName={'LocationFragment'}>
+        <Stack.Navigator>
                 
             <Stack.Screen
                 options={{
@@ -26,28 +25,7 @@ const LocationStack = () => {
                 }}
                 name={'LocationFragment'}
                 component={LocationFragment}
-            />
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-                name={'AQIDetailsScreen'}
-                component={AQIDetailsScreen}
-            />
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-                name={'DetailsInforScreen'}
-                component={DetailsInforScreen}
-            />
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-                name={'InforAQIScreen'}
-                component={InforAQIScreen}
-            />
+            />   
         </Stack.Navigator>
     );
 };

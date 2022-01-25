@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
+import Chart from '@components/chart/Chart';
 
 const Stack = createStackNavigator();
 
