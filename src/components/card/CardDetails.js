@@ -26,7 +26,7 @@ const CardDetails = (props: CardStyleProps) => {
         <View style={styles.AQIView}>
             <View style={styles.locationView}>
                 <Text style={styles.locationText}>Địa chỉ đặt thiết bị</Text>
-                <Text style={{color: Colors.TEXT_NORMAL}}>Hà Nội, Việt Nam</Text>
+                <Text style={{color: 'black'}}>Hà Nội, Việt Nam</Text>
             </View>
             <LinearGradient colors={[view.color,"#ffffff"]}>
                 <View style={styles.rectangleAQIView}>
@@ -113,6 +113,8 @@ const styles = ScaledSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
+        borderBottomEndRadius: 10,
+        borderTopRightRadius: 10
 
     },
     text: {

@@ -5,6 +5,7 @@ import { Colors } from '@shared/colors';
 import { ScaledSheet } from 'react-native-size-matters';
 import PrimaryButton from "@components/common/PrimaryButton";
 import moment from "moment";
+import ChartContent from './VictoryChart';
 
 const formatTime = (time) => {
     return moment(time).format('DD-MM-YYYY, HH:mm');
@@ -52,6 +53,8 @@ const Chart = () => {
     const [PMClick, setPMClick] = useState(false);
     const [COClick, setCOClick] = useState(false);
     const [CO2Click, setCO2Click] = useState(false);
+    const [pollutant, setPollutant] = useState('AQI');
+    const [unit, setUnit] = useState('US');
     const handleClick = (pollutant)=>{
         switch(pollutant){
             case 'AQI':
@@ -59,25 +62,32 @@ const Chart = () => {
                 setCO2Click(false);
                 setCOClick(false);
                 setPMClick(false);
+                setPollutant('AQI');
+                setUnit('US');
                 break;
             case 'PM':
                 setAQIClick(false);
                 setCO2Click(false);
                 setCOClick(false);
                 setPMClick(true);
+                setPollutant('PM2.5');
+                setUnit('μm/m3');
                 break;
             case 'CO':
-                console.log(pollutant);
                 setAQIClick(false);
                 setCO2Click(false);
                 setCOClick(true);
                 setPMClick(false);
+                setPollutant('CO');
+                setUnit('μm/m3');
                 break;
             case 'CO2':
                 setAQIClick(false);
                 setCO2Click(true);
                 setCOClick(false);
-                setPMClick(false); 
+                setPMClick(false);
+                setPollutant('CO2');
+                setUnit('μm/m3'); 
                 break;
         }
     }
@@ -134,8 +144,8 @@ const Chart = () => {
                 <View style={styles.detailsView}>
                     <Text style={styles.txtForBtn}>{formatTime(new Date().getTime())}</Text>
                     <View style={styles.detailsViewText}>
-                        <Text style={{color: Colors.TEXT_NORMAL}}>AQI
-                            <Text style={{ color: 'black' , fontWeight: 'bold'}}>{'  '}US</Text>
+                        <Text style={{color: 'black' , fontWeight: 'bold'}}>{pollutant}
+                            <Text style={{color: Colors.TEXT_NORMAL , fontWeight: '400'}}>{'  '}{unit}</Text>
                         </Text>
                         <Text style={{color: Colors.TEXT_NORMAL}}>Rất có hại cho sức khoẻ
                             <Text style={{ color: 'black', fontWeight: 'bold' }}>{'  '}266</Text>
@@ -143,36 +153,7 @@ const Chart = () => {
                     </View>
                 </View>
             </View>
-            {/* chart */}
-            <View style={{ width: '100%', backgroundColor: '#fff' }}>
-                <VictoryChart
-                    theme={VictoryTheme.material}
-                    barRatio={10}
-                    domain={{ x: [0, 23] }}
-
-                >
-                    <VictoryBar
-                        data={data}
-                        barWidth={10}
-                        style={{
-                            data: {
-                                fill: ({ datum }) => chartColor(datum.y)
-                            }
-                        }}
-                        alignment="start"
-                        events={[
-                            {
-                                target: "data",
-                                eventHandlers: {
-                                    onPress: () => {
-                                        Alert.alert('clicked');
-                                    }
-                                }
-                            }
-                        ]}
-                    />
-                </VictoryChart>
-            </View>
+            <ChartContent />
         </View>
     )
 }
@@ -199,12 +180,9 @@ const styles = ScaledSheet.create({
         flexDirection: 'row',
         width: '90%',
         justifyContent: 'space-between',
-        // backgroundColor: 'yellow',
         height: '50@s',
-
     },
     btnTime: {
-        backgroundColor: 'red',
         width: '50%',
         alignItems: 'center',
         justifyContent: 'center',
