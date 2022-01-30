@@ -14,8 +14,6 @@ target 'AQI_IoT' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'sp-react-native-mqtt', :path => '../node_modules/sp-react-native-mqtt'
-
   target 'AQI_IoTTests' do
     inherit! :complete
     # Pods for testing
