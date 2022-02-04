@@ -6864,6 +6864,11 @@
   "resolved" "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz"
   "version" "0.6.1"
 
+"sp-react-native-mqtt@^0.5.0":
+  "integrity" "sha512-kWvpNuYY/AAxRYesvoTbRMWXC84ek/jWKA3xToZbnwqw9OpLwbS4I76OvWo3hRgV4+nibrtyh9Sd9cO/jX4KIg=="
+  "resolved" "https://registry.npmjs.org/sp-react-native-mqtt/-/sp-react-native-mqtt-0.5.0.tgz"
+  "version" "0.5.0"
+
 "spdx-correct@^3.0.0":
   "integrity" "sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w=="
   "resolved" "https://registry.npmjs.org/spdx-correct/-/spdx-correct-3.1.1.tgz"
