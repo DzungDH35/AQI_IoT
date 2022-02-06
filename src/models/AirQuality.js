@@ -1,52 +1,65 @@
+import Geocoder from 'react-native-geocoding';
+
+let aqiCalculator = require('aqi-us');
+
 export class AirQuality {
-	#pollutants = null; // so2, no2, co, o3, pm2_5, pm10
-	#aqi = null;
-	#location = null;
-	#time = null;
+	pollutants = {}; // so2, no2, co, o3, pm2_5, pm10
+	aqi = '';
+	temperature = '';
+	humidity = '';
+	aqi = '';
+	location = {};
+	time = '';
 
 	constructor(data = {}) {
-		this.setSo2(data.so2);
-		this.setNo2(data.no2);
-		this.setCo(data.co);
-		this.setO3(data.o3);
-		this.setPm2_5(data.pm2_5);
-		this.setPm10(data.pm10);
-		this.setAqi(data.aqi);
-		this.setLocation(data.location);
-		this.setTime(data.time);
+		this.setSo2(data['so2']);
+		this.setNo2(data['no2']);
+		this.setCo(data['co']);
+		this.setO3(data['o3']);
+		this.setPm2_5(data['pm2_5']);
+		this.setPm10(data['pm10']);
+		this.setTemperature(data['temperature']);
+		this.setHumidity(data['humidity']);
+		this.setLocation(data['location']);
+		this.setTime(data['time']);
+		this.setAqi(aqiCalculator.pm25(data['pm2_5']));
 	}
 
-	getSo2() { return this.#pollutants.so2; }
-	setSo2(so2) { if (so2 >= 0) this.#pollutants.so2 = so2; }
+	getSo2() { return this.pollutants['so2']; }
+	setSo2(so2) { if (so2 >= 0) this.pollutants['so2'] = so2; }
 
-	getNo2() { return this.#pollutants.no2; }
-	setNo2(no2) { if (no2 >= 0) this.#pollutants.no2 = no2; }
+	getNo2() { return this.pollutants['no2']; }
+	setNo2(no2) { if (no2 >= 0) this.pollutants['no2'] = no2; }
 
-	getCo() { return this.#pollutants.co; }
-	setCo(co) { if (co >= 0) this.#pollutants.co = co; }
+	getCo() { return this.pollutants['co']; }
+	setCo(co) { if (co >= 0) this.pollutants['co'] = co; }
 
-	getO3() { return this.#pollutants.o3; }
-	setO3(o3) { if (o3 >= 0) this.#pollutants.o3 = o3; }
+	getO3() { return this.pollutants['o3']; }
+	setO3(o3) { if (o3 >= 0) this.pollutants['o3'] = o3; }
 
-	getPm2_5() { return this.#pollutants.pm2_5; }
-	setPm2_5(pm2_5) { if (pm2_5 >= 0) this.#pollutants.pm2_5 = pm2_5; }
+	getPm2_5() { return this.pollutants['pm2_5']; }
+	setPm2_5(pm2_5) { if (pm2_5 >= 0) this.pollutants['pm2_5'] = pm2_5; }
 
-	getPm10() { return this.#pollutants.pm10; }
-	setPm10(pm10) { if (pm10 >= 0) this.#pollutants.pm10 = pm10; }
+	getPm10() { return this.pollutants['pm10']; }
+	setPm10(pm10) { if (pm10 >= 0) this.pollutants['pm10'] = pm10; }
 
-	getAqi() { return this.#aqi; }
+	getTemperature() { return this.temperature; }
+	setTemperature(temperature) { this.temperature = temperature; }
+
+	getHumidity() { return this.humidity; }
+	setHumidity(humidity) { this.humidity = humidity; }
+
+	getAqi() { return this.aqi; }
 	setAqi(aqi) {
 		if (0 <= aqi || aqi <= 500)
-			this.#aqi = aqi;
-		else
-			throw ("Not a valid AQI.");
+			this.aqi = aqi;
 	}
 
-	getLocation() { return this.#location; }
+	getLocation() { return this.location; }
 	setLocation(location) { this.location = location; }
 
-	getTime() { return this.#time; }
-	setTime(time) { this.#time = time; }
+	getTime() { return this.time; }
+	setTime(time) { this.time = time; }
 
 	/**
 	  * Determine level of concerns based on AQI:
@@ -57,10 +70,10 @@ export class AirQuality {
 		  4 - Very Unhealthy
 		  5 - Hazardous
 	  * 
-	  * @returns {Number | String}
+	  * @returns Number
 	  */
 	getLevelOfAqi() {
-		let aqi = this.#aqi;
+		let aqi = this.aqi;
 
 		if (0 <= aqi && aqi <= 50)
 			return 0;
@@ -77,7 +90,7 @@ export class AirQuality {
 	}
 
 	getStatus() {
-		switch (this.getLevelOfAqi(this.#aqi)) {
+		switch (this.getLevelOfAqi(this.aqi)) {
 			case 0:
 				return "Good";
 			case 1:
@@ -92,4 +105,14 @@ export class AirQuality {
 				return "Hazardous";
 		}
 	}
+
+	// getLocationName() {
+	// 	Geocoder.init("AIzaSyCzeFoklejdzBqqDp2nLKb81ZUxJyYcyYE");
+	// 	Geocoder.from(this.location)
+	// 	.then(json => {
+	// 		var addressComponent = json.results[0].address_components[0];
+	// 		console.log(addressComponent);
+	// 	})
+	// 	.catch(error => console.warn(error));
+	// }
 }
