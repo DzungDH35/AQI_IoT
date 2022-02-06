@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { AqiQuality } from '@models/AirQuality';
 import { FaceStatus } from '@components/card/FaceStatus';
 import { Colors } from '@shared/colors';
@@ -111,7 +111,10 @@ export class Card extends React.Component {
 		let airQuality = this.airQuality;
 
 		return (
-			<View style={[styles.container, styles.containerShadow, this.props.outerLayout]}>
+			<TouchableOpacity 
+				style={[styles.container, styles.containerShadow, this.props.outerLayout]}
+				activeOpacity={0.8}
+				onPress={() =>{ this.props.navigation.navigate('DetailsInforScreen') }}>
 				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackgroundColor()]}>
 					<Text style={styles.textStatus}>{airQuality.getStatus()}</Text>
 					<FaceStatus status={airQuality.getLevelOfAqi()} style={styles.faceStatus}/>
@@ -130,7 +133,7 @@ export class Card extends React.Component {
 						<Icon style={styles.angleRight} name="angle-right" size={15}/>
 					</View>
 				</View>
-			</View>
+			</TouchableOpacity>
 		);
 	}
 }

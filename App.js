@@ -24,7 +24,7 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={'AQIDetailsScreen'}>
+        initialRouteName={'MainStack'}>
         <Stack.Screen name="MainStack" component={MainStack} />
         <Stack.Screen
           options={{
