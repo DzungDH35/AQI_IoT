@@ -7,9 +7,7 @@ import PrimaryButton from "@components/common/PrimaryButton";
 import moment from "moment";
 import ChartContent from './VictoryChart';
 
-const formatTime = (time) => {
-    return moment(time).format('DD-MM-YYYY, HH:mm');
-}
+
 
 const data = [
     { x: 0, y: Math.floor(Math.random() * 200) + 30 },
@@ -55,6 +53,12 @@ const Chart = () => {
     const [CO2Click, setCO2Click] = useState(false);
     const [pollutant, setPollutant] = useState('AQI');
     const [unit, setUnit] = useState('US');
+    const formatTime = (time) => {
+        if(dayClick) {
+            return moment(time).format('DD-MM-YYYY');
+        }
+        return moment(time).format('DD-MM-YYYY, HH:mm');
+    }
     const handleClick = (pollutant)=>{
         switch(pollutant){
             case 'AQI':
@@ -147,7 +151,7 @@ const Chart = () => {
                         <Text style={{color: 'black' , fontWeight: 'bold'}}>{pollutant}
                             <Text style={{color: Colors.TEXT_NORMAL , fontWeight: '400'}}>{'  '}{unit}</Text>
                         </Text>
-                        <Text style={{color: Colors.TEXT_NORMAL}}>Rất có hại cho sức khoẻ
+                        <Text style={{color: Colors.TEXT_NORMAL}}>Trung bình
                             <Text style={{ color: 'black', fontWeight: 'bold' }}>{'  '}266</Text>
                         </Text>
                     </View>

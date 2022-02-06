@@ -60,7 +60,21 @@ const ChartContent = () => {
         <VictoryChart
           theme={VictoryTheme.material}
           barRatio={10}
-          domain={{x: [0, 23]}}>
+          domain={{x: [0, 23]}}
+          // externalEventMutations={externalMutations}
+          events={[
+            {
+              target: "data",
+              childName: "Bar-1",
+              eventHandlers: {
+                onClick: () => ({
+                  target: "data",
+                  mutation: () => ({ style: { fill: "orange" } })
+                })
+              }
+            }
+          ]}
+          >
           <VictoryBar
             data={data}
             barWidth={10}
@@ -71,26 +85,26 @@ const ChartContent = () => {
             }}
             alignment="start"
             eventKey="x"
-            events={[
-              {
-                eventHandlers: {
-                  onPress: () => {
-                    return [
-                      {
-                        target: 'data',
-                        mutation: props => {
-                          console.log(props.datum);
-                          const fill = props.style && props.style.fill;
-                          return fill === 'black'
-                            ? null
-                            : {style: {fill: 'black'}};
-                        },
-                      },
-                    ];
-                  },
-                },
-              },
-            ]}
+            // events={[
+            //   {
+            //     eventHandlers: {
+            //       onPress: () => {
+            //         return [
+            //           {
+            //             target: 'data',
+            //             mutation: props => {
+            //               console.log(props.datum);
+            //               const fill = props.style && props.style.fill;
+            //               return fill === 'black'
+            //                 ? null
+            //                 : {style: {fill: 'black'}};
+            //             },
+            //           },
+            //         ];
+            //       },
+            //     },
+            //   },
+            // ]}
           />
         </VictoryChart>
       </Svg>
