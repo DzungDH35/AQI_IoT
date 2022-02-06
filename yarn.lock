@@ -1974,10 +1974,10 @@
   "resolved" "https://registry.npmjs.org/appdirsjs/-/appdirsjs-1.2.6.tgz"
   "version" "1.2.6"
 
-"aqi-bot@^1.1.4":
-  "integrity" "sha1-h+T9pojHeHQ1KplXBMi/raEQSK8="
-  "resolved" "https://registry.npmjs.org/aqi-bot/-/aqi-bot-1.1.4.tgz"
-  "version" "1.1.4"
+"aqi-us@^0.3.0":
+  "integrity" "sha512-HVHMVShYizoFzPtShpI5DoV/fYBXOJ9DeCMzOoq5DE0qGfljF3C6MlzsZuzdZiejXKRK1Al+bHXdzc1S9RgUtg=="
+  "resolved" "https://registry.npmjs.org/aqi-us/-/aqi-us-0.3.0.tgz"
+  "version" "0.3.0"
 
 "argparse@^1.0.7":
   "integrity" "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg=="
