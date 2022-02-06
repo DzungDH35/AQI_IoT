@@ -81,23 +81,11 @@ const styles = StyleSheet.create({
 });
 
 export class Card extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			aqi: this.props.aqi,
-			location: this.props.location,
-			time: this.props.time
-		};
-	}
-
-	aqiObject = new AirQuality(mockAirQuality['Unhealthy1']);
-	aqiLevel = this.aqiObject.getLevelOfAqi();
-	status = this.aqiObject.getStatus();
-	aqi = this.aqiObject.getAqi();
+	airQuality = null;
 
 	getLeftInfoWrapperBackgroundColor() {
 		let aqiColor;
-		switch (this.aqiLevel) {
+		switch (this.airQuality.getLevelOfAqi()) {
 			case 0:
 				aqiColor = Colors.GOOD; break;
 			case 1:
@@ -117,23 +105,28 @@ export class Card extends React.Component {
 	}
 
 	render() {
+		console.log('Card component renders');
+		this.airQuality = new AirQuality(this.props.data);
+		let airQuality = this.airQuality;
+		console.log(airQuality.aqi);
+
 		return (
 			<View style={[styles.container, styles.containerShadow, this.props.outerLayout]}>
 				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackgroundColor()]}>
-					<Text style={styles.textStatus}>{this.textStatus}</Text>
-					<FaceStatus status={this.aqiLevel} style={styles.faceStatus}/>
+					<Text style={styles.textStatus}>{airQuality.getStatus()}</Text>
+					<FaceStatus status={airQuality.getLevelOfAqi()} style={styles.faceStatus}/>
 					<View>
-						<Text style={styles.aqiNumber}>{this.state.aqi}</Text>
+						<Text style={styles.aqiNumber}>{airQuality.getAqi()}</Text>
 						<Text style={styles.aqiUnit}>US AQI</Text>
 					</View>
 				</View>
 				<View style={styles.rightInfoWrapper}>
 					<View style={styles.rightInfoWrapperHeader}>
-						<Text style={styles.location1}>{this.state.location}</Text>
-						<Text style={styles.location2}>{this.state.location}</Text>
+						<Text style={styles.location1}>{airQuality.getLocation()['longitude']}</Text>
+						<Text style={styles.location2}>{airQuality.getLocation()['latitude']}</Text>
 					</View>
 					<View style={styles.rightInfoWrapperFooter}>
-						<Text style={styles.time}>{this.state.time}</Text>
+						<Text style={styles.time}>{airQuality.getTime()}</Text>
 						<Icon style={styles.angleRight} name="angle-right" size={15}/>
 					</View>
 				</View>
