@@ -88,7 +88,7 @@ class Location extends React.Component {
 				renderItem={({ item }) => (
 					<Card outerLayout={styles.listItem} {...item}/>
 				)}
-				// keyExtractor={(item) => item.deviceId}
+				keyExtractor={(item) => item.deviceId}
 			/>
 		);
 	}

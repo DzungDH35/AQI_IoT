@@ -1,3 +1,5 @@
+import Geocoder from 'react-native-geocoding';
+
 let aqiCalculator = require('aqi-us');
 
 export class AirQuality {
@@ -103,4 +105,14 @@ export class AirQuality {
 				return "Hazardous";
 		}
 	}
+
+	// getLocationName() {
+	// 	Geocoder.init("AIzaSyCzeFoklejdzBqqDp2nLKb81ZUxJyYcyYE");
+	// 	Geocoder.from(this.location)
+	// 	.then(json => {
+	// 		var addressComponent = json.results[0].address_components[0];
+	// 		console.log(addressComponent);
+	// 	})
+	// 	.catch(error => console.warn(error));
+	// }
 }

@@ -108,7 +108,6 @@ export class Card extends React.Component {
 		console.log('Card component renders');
 		this.airQuality = new AirQuality(this.props.data);
 		let airQuality = this.airQuality;
-		console.log(airQuality.aqi);
 
 		return (
 			<View style={[styles.container, styles.containerShadow, this.props.outerLayout]}>
