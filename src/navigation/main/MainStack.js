@@ -10,7 +10,7 @@ import AccountStack from '@navigation/main/account/AccountStack';
 
 const BottomTab = createBottomTabNavigator();
 
-const MainStack = () => {
+const MainStack = ({ navigation }) => {
 	return (
 		<BottomTab.Navigator
 			initialRouteName={'Home'}

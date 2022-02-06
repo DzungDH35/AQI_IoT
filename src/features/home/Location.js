@@ -86,7 +86,7 @@ class Location extends React.Component {
 				contentContainerStyle={styles.list}
 				data={this.state.data}
 				renderItem={({ item }) => (
-					<Card outerLayout={styles.listItem} {...item}/>
+					<Card outerLayout={styles.listItem} {...item} navigation={this.props.navigation}/>
 				)}
 				keyExtractor={(item) => item.deviceId}
 			/>

@@ -114,7 +114,9 @@ export class Card extends React.Component {
 			<TouchableOpacity 
 				style={[styles.container, styles.containerShadow, this.props.outerLayout]}
 				activeOpacity={0.8}
-				onPress={() =>{ this.props.navigation.navigate('DetailsInforScreen') }}>
+				onPress={() =>{
+					this.props.navigation.navigate('AQIDetailsScreen');
+				}}>
 				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackgroundColor()]}>
 					<Text style={styles.textStatus}>{airQuality.getStatus()}</Text>
 					<FaceStatus status={airQuality.getLevelOfAqi()} style={styles.faceStatus}/>

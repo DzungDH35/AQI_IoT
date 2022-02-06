@@ -10,6 +10,7 @@ import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen';
 // import LoginScreen from '@features/auth/LoginScreen'
 // import SignUpScreen from '@features/auth/SignUpScreen';
 import MainStack from '@navigation/main/MainStack';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 LogBox.ignoreLogs([

@@ -15,10 +15,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 const Stack = createStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const LocationStack = () => {
+const LocationStack = ({ navigation }) => {
     return (
         <Stack.Navigator>
-                
             <Stack.Screen
                 options={{
                     headerShown: false
