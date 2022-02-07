@@ -7,6 +7,7 @@ import { DeviceFragment } from '@features/home/Device';
 import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen';
 import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
+import Header from '@components/header/Header';
 
 // Navigation modules
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,21 +15,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 const Stack = createStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
-
-const LocationStack = () => {
-    return (
-        <Stack.Navigator>
-                
-            <Stack.Screen
-                options={{
-                    headerShown: false
-                }}
-                name={'LocationFragment'}
-                component={LocationFragment}
-            />   
-        </Stack.Navigator>
-    );
-};
 
 const styles = StyleSheet.create({
     tabBarLabel: {
@@ -39,13 +25,19 @@ const styles = StyleSheet.create({
 
 const HomeStack = () => {
     return (
-        <TopTab.Navigator
-            screenOptions={{
-                tabBarLabelStyle: styles.tabBarLabel,
-            }}>
-            <TopTab.Screen name="Locations" component={LocationStack}/>
-            <TopTab.Screen name="Devices" component={DeviceFragment}/>
-        </TopTab.Navigator>
+        
+        <Stack.Navigator
+        screenOptions={{
+            tabBarLabelStyle: styles.tabBarLabel,
+        }}>
+            <Stack.Screen
+                options={{
+                    headerShown: false
+                }}
+                name={'LocationFragment'}
+                component={LocationFragment}
+            /> 
+        </Stack.Navigator>
     )
 };
 

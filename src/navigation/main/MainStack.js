@@ -13,7 +13,7 @@ const BottomTab = createBottomTabNavigator();
 const MainStack = () => {
 	return (
 		<BottomTab.Navigator
-			initialRouteName={'Map'}
+			initialRouteName={'Home'}
 			screenOptions={({ route }) => ({
 				headerShown: false,
 				tabBarShowLabel: false,
@@ -61,7 +61,7 @@ const MainStack = () => {
 			})}>
 			<BottomTab.Screen name="Home" component={HomeStack} />
 			<BottomTab.Screen name="Map" component={MapStack} />
-			<BottomTab.Screen name="Account" component={AccountStack} />
+			{/* <BottomTab.Screen name="Account" component={AccountStack} /> */}
 		</BottomTab.Navigator>
 	);
 };
