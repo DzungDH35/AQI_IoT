@@ -1,40 +1,27 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, 
+    ScrollView, ActivityIndicator, Platform, TextInput, Keyboard, ToastAndroid 
+} from 'react-native';
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, Bar } from "victory-native";
 import { Colors } from '@shared/colors';
 import { ScaledSheet } from 'react-native-size-matters';
 import PrimaryButton from "@components/common/PrimaryButton";
 import moment from "moment";
 import ChartContent from './VictoryChart';
+import { data, dataDay } from '@shared/data';
+import { apiGetData } from '@api/apiGetData';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { dateFormat, formatDate } from '@shared/dateFormat';
+import GlobalContext from "@context/Context";
 
 
+let aqiCalculator = require('aqi-us');
 
-const data = [
-    { x: 0, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 1, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 2, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 3, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 4, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 5, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 6, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 7, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 8, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 9, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 10, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 11, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 12, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 13, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 14, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 15, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 16, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 17, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 18, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 19, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 20, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 21, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 22, y: Math.floor(Math.random() * 200) + 30 },
-    { x: 23, y: Math.floor(Math.random() * 200) + 30 },
-];
+const deviceId1 = "3cec62d2-c37b-4ac1-b698-d8d255ef016c";
+// const dateTime = "2022-1-1";
+const BASE_URL = 'http://3208-27-67-73-112.ngrok.io';
+const QUANG_URL = 'http://14.190.177.159';
 
 const chartColor = (y) => {
     if (y < 51) return Colors.GOOD;
@@ -45,22 +32,44 @@ const chartColor = (y) => {
     return Colors.HAZARDOUS;
 }
 
-const Chart = () => {
+interface ChartProps {
+    deviceId?: string;
+}
+
+const Chart = (props: ChartProps) => {
+    const {api} = useContext(GlobalContext);
+    // console.log(api);
+    const { deviceId } = props;
     const [dayClick, setDayClick] = useState(false);
-    const [AQIClick, setAQIClick] = useState(true);
-    const [PMClick, setPMClick] = useState(false);
-    const [COClick, setCOClick] = useState(false);
-    const [CO2Click, setCO2Click] = useState(false);
-    const [pollutant, setPollutant] = useState('AQI');
-    const [unit, setUnit] = useState('US');
-    const formatTime = (time) => {
-        if(dayClick) {
-            return moment(time).format('DD-MM-YYYY');
+    const [dataChart, setDataChart] = useState([]);
+    const [loading, setLoading] = useState(1);
+    const [agvAQI, setAgvAQI] = useState(null);
+    const [dob, setDob] = useState(new Date());
+    const [showdatePicker, setShowDatePicker] = useState(false);
+    // const [api, setApi]= useState('');
+    const onChangeDate = (event, selectedDate) => {
+        const currentDate = selectedDate || dob;
+        setShowDatePicker(Platform.OS === 'ios');
+        setDob(currentDate);
+    };
+
+    const handleOkBtn = (e) => {
+        Keyboard.dismiss();
+        if(api == '' || api == null) {
+            ToastAndroid.show("Hãy điền API", ToastAndroid.SHORT);
+        }else{
+            ToastAndroid.show("Cập nhật API thành công!", ToastAndroid.SHORT);
         }
-        return moment(time).format('DD-MM-YYYY, HH:mm');
     }
-    const handleClick = (pollutant)=>{
-        switch(pollutant){
+
+    const formatTime = (time) => {
+        if (dayClick) {
+            return moment(time).format('MM-YYYY');
+        }
+        return moment(time).format('DD-MM-YYYY');
+    }
+    const handleClick = (pollutant) => {
+        switch (pollutant) {
             case 'AQI':
                 setAQIClick(true);
                 setCO2Click(false);
@@ -91,73 +100,189 @@ const Chart = () => {
                 setCOClick(false);
                 setPMClick(false);
                 setPollutant('CO2');
-                setUnit('μm/m3'); 
+                setUnit('μm/m3');
                 break;
         }
     }
+
+    useEffect(() => {
+        fetchData('day');
+    }, []);
+
+    useEffect(() => {
+        // console.log(now);
+        if(!dayClick){
+            fetchData('day');
+        }else{
+            fetchData('month');
+        }
+    },[dob]);
+
+    const processData = (data) => {
+        let dataChartProceed = [];
+        let cnt = 0;
+        let agvA = 0;
+        data.forEach(element => {
+            if (element.polutants.pm2_5) {
+                const pm25 = Math.round(element.polutants.pm2_5);
+                dataChartProceed.push(aqiCalculator.pm25(pm25));
+                cnt+=1;
+            } else {
+                dataChartProceed.push(0);
+            }
+        });
+        let agv = 0;
+        dataChartProceed.forEach(e => {
+            agv += e;
+        });
+        if(cnt > 0){
+            agvA = agv / cnt;
+        }
+        console.log(agvA);
+        if(agvA == 0){
+            setLoading(3);
+            setAgvAQI(null);
+            setDataChart(dataChartProceed);
+            console.log('NAN');
+            console.log(dataChartProceed);
+        }else{
+            setAgvAQI(agvA.toFixed(2));
+            setDataChart(dataChartProceed);
+            console.log(dataChart);
+
+        }
+    }
+
+    const fetchData = async (p) => {
+        if (p == 'day') {
+            try {
+                setLoading(1);
+                const results = await apiGetData.getByDay(api, deviceId, formatDate(dob));
+                if (results.data.data) {
+                    processData(results.data.data);
+                    setLoading(2);
+                }
+            } catch (error) {
+                console.log('error' + error);
+                setLoading(3);
+            }
+        } else {
+            try {
+                setLoading(1);
+                const results = await apiGetData.getByMonth(api, deviceId, formatDate(dob));
+                if (results.data.data) {
+                    processData(results.data.data);
+                    setLoading(2);
+                }
+            } catch (error) {
+                console.log('error' + error);
+                setLoading(3);
+            }
+        }
+    }
+
+    const handleDayClick = () => {
+        if (dayClick) {
+            setDayClick(!dayClick);
+            setAgvAQI(null);
+            fetchData('day');
+        }
+    }
+
+    const handleMonthClick = () => {
+        if (!dayClick) {
+            setDayClick(!dayClick);
+            setAgvAQI(null);
+            fetchData('month');
+        }
+    }
+
+    const renderChart = () =>{
+        if(loading == 1) {
+            return <ActivityIndicator size="large" color={Colors.PRIMARY_COLOR} style={{ paddingTop: 40, paddingBottom: 250 }} />
+        }else if(loading == 2) {
+            return <ChartContent data={dataChart} />
+        }else{
+            return (
+                <View style={{ justifyContent: 'center', alignItems: 'center' , marginTop: 50, marginBottom: 250}}>
+                    <Text style={{color: 'black', fontWeight: 'bold', fontSize:18}}>Không có dữ liệu!</Text>
+                </View>
+            )  
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.historyView}>
                 <Text style={styles.historyText}>Lịch sử</Text>
+                {/* <View style={styles.content}>
+                    <TextInput 
+                        style={styles.textInput} 
+                        placeholder="Đường link API" 
+                        placeholderTextColor={Colors.TEXT_NORMAL}
+                        onChangeText={setApi}
+                    />
+                    <TouchableOpacity style={styles.okBtn} onPress={handleOkBtn}>
+                        <Text style={styles.okBtnText}>OK</Text>
+                    </TouchableOpacity>
+                </View> */}
                 <View style={styles.btnHistoryView}>
                     <TouchableOpacity style={[styles.btnTime, {
                         backgroundColor: !dayClick ? Colors.PRIMARY_COLOR : 'white'
-                    }]} onPress={() => {
-                        if(dayClick) {
-                            setDayClick(!dayClick);
-                        }
-                    }}>
-                        <Text style={[styles.btnText,{
+                    }]} onPress={handleDayClick}>
+                        <Text style={[styles.btnText, {
                             color: dayClick ? 'black' : 'white'
-                        }]}>Giờ</Text>
+                        }]}>Ngày</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.btnTime, {
                         backgroundColor: dayClick ? Colors.PRIMARY_COLOR : 'white'
-                    }]} onPress={() => {
-                        if(!dayClick) {
-                            setDayClick(!dayClick);
-                        }
-                    }}>
-                        <Text style={[styles.btnText,{
+                    }]} onPress={handleMonthClick}>
+                        <Text style={[styles.btnText, {
                             color: dayClick ? 'white' : 'black'
-                        }]}>Ngày</Text>
+                        }]}>Tháng</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.pollutantsView}>
-                    <TouchableOpacity 
-                        onPress={() => handleClick('AQI')}
-                        style={[styles.pollutantsBtn,{backgroundColor: AQIClick ? Colors.PRIMARY_COLOR : 'white'}]}>
-                        <Text style={[styles.btnText, {color: AQIClick? 'white' : 'black'}]}>AQI</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        onPress={() => handleClick('PM')}
-                        style={[styles.pollutantsBtn,{backgroundColor: PMClick ? Colors.PRIMARY_COLOR : 'white'}]}>
-                        <Text style={[styles.btnText, {color: PMClick? 'white' : 'black'}]}>PM2.5</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        onPress={() => handleClick('CO')}
-                        style={[styles.pollutantsBtn,{backgroundColor: COClick ? Colors.PRIMARY_COLOR : 'white'}]}>
-                        <Text style={[styles.btnText, {color: COClick? 'white' : 'black'}]}>CO</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        onPress={() => handleClick('CO2')}
-                        style={[styles.pollutantsBtn,{backgroundColor: CO2Click ? Colors.PRIMARY_COLOR : 'white'}]}>
-                        <Text style={[styles.btnText, {color: CO2Click? 'white' : 'black'}]}>CO2</Text>
-                    </TouchableOpacity>
-                </View>
+                
                 <View style={styles.detailsView}>
-                    <Text style={styles.txtForBtn}>{formatTime(new Date().getTime())}</Text>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <View style={styles.timeView}>
+                            <Text style={styles.txtForBtn}>{formatTime(dob)}</Text>
+                            <TouchableOpacity
+                                style={styles.pickTimeBtn}
+                                activeOpacity={0.6}
+                                onPress={() => {
+                                    setShowDatePicker(true);
+                            }}>
+                                <Ionicons
+                                    name="calendar-outline"
+                                    size={32}
+                                    color={Colors.PRIMARY_COLOR}
+                                />
+                                {showdatePicker ? (
+                                    <DateTimePicker
+                                        testID="dateTimePicker"
+                                        value={dob}
+                                        mode={'date'}
+                                        is24Hour
+                                        display="default"
+                                        onChange={onChangeDate}
+                                        maximumDate={new Date()}
+                                    />
+                                ) : null}
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     <View style={styles.detailsViewText}>
-                        <Text style={{color: 'black' , fontWeight: 'bold'}}>{pollutant}
-                            <Text style={{color: Colors.TEXT_NORMAL , fontWeight: '400'}}>{'  '}{unit}</Text>
+                        <Text style={{ color: 'black', fontWeight: 'bold' }}>AQI
+                            <Text style={{ color: Colors.TEXT_NORMAL, fontWeight: '400' }}>  US</Text>
                         </Text>
-                        <Text style={{color: Colors.TEXT_NORMAL}}>Trung bình
-                            <Text style={{ color: 'black', fontWeight: 'bold' }}>{'  '}266</Text>
+                        <Text style={{ color: Colors.TEXT_NORMAL }}>Trung bình
+                            <Text style={{ color: 'black', fontWeight: 'bold' }}>{'  '}{agvAQI ? agvAQI : '-.-'}</Text>
                         </Text>
                     </View>
                 </View>
             </View>
-            <ChartContent />
+            {renderChart()}
         </View>
     )
 }
@@ -228,6 +353,46 @@ const styles = ScaledSheet.create({
         color: 'black',
         padding: '10@s',
         fontSize: '18@ms0.3'
+    },
+    pickTimeBtn: {
+        height: '40@s',
+        width: '40@s',
+        // backgroundColor: Colors.PRIMARY_COLOR,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    timeView: {
+        // backgroundColor: 'red',
+        flexDirection: 'row',
+        alignItems: 'center',
+        // justifyContent: 'space-between',
+    },
+    textInput: {
+        borderBottomColor: Colors.PRIMARY_COLOR,
+        // backgroundColor: Colors.PRIMARY_COLOR,
+        borderBottomWidth: 1,
+        width: '70%',
+        color: 'black',
+    },
+    content: { 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        // marginTop: '50@s',
+        // backgroundColor: 'red',
+        marginBottom: '20@s',
+    },
+    okBtn:{
+        width: '50@s',
+        backgroundColor: Colors.PRIMARY_COLOR,
+        height: '40@s',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '10@s',
+        borderRadius: '10@s',
+    },
+    okBtnText:{
+        color: '#fff',
+        fontSize: '14@s',
     }
 })
 

@@ -11,10 +11,7 @@ import Header from '@components/header/Header';
 
 // Navigation modules
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
 const Stack = createStackNavigator();
-const TopTab = createMaterialTopTabNavigator();
 
 const styles = StyleSheet.create({
     tabBarLabel: {
@@ -25,7 +22,6 @@ const styles = StyleSheet.create({
 
 const HomeStack = () => {
     return (
-        
         <Stack.Navigator
         screenOptions={{
             tabBarLabelStyle: styles.tabBarLabel,

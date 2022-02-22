@@ -71,7 +71,7 @@ const InforAQIScreen = ({ navigation }) => {
                     onPress={clickDetails} />
                 <Text style={styles.headerText}>AQI là gì?</Text>
             </View>
-            <ScrollView style={styles.content}>
+            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <Text style={styles.text}>{AQI}</Text>
                 {DATA.map((item, key) => (
                     <View key={item.id} style={styles.oneView}>

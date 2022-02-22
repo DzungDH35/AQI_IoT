@@ -8,6 +8,84 @@ import { AirQuality } from '../../models/AirQuality';
 import { color } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/core';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from "moment";
+
+export class Card extends React.Component {
+	airQuality = null;
+
+	getLeftInfoWrapperBackgroundColor() {
+		let aqiColor;
+		switch (this.airQuality.getLevelOfAqi()) {
+			case 0:
+				aqiColor = Colors.GOOD; break;
+			case 1:
+				aqiColor = Colors.MODERATE; break;
+			case 2:
+				aqiColor = Colors.UNHEALTHY_1; break;
+			case 3:
+				aqiColor = Colors.UNHEALTHY_2; break;
+			case 4:
+				aqiColor = Colors.UNHEALTHY_3; break;
+			case 5:
+				aqiColor = Colors.HAZARDOUS; break;
+		}
+		return {
+			backgroundColor: aqiColor
+		}
+	}
+
+	render() {
+		// console.log('Card component renders');
+		this.airQuality = new AirQuality(this.props.data);
+		// console.log();
+		let airQuality = this.airQuality;
+		// const { navigation } = this.props;
+		const data = {
+			aqi: airQuality.getAqi(),
+			pm25: airQuality.getPm2_5(),
+			co: airQuality.getCo(),
+			temperature: airQuality.getTemperature(),
+			humidity: airQuality.getHumidity(),
+			time: moment(airQuality.getTime()).format('HH:mm:ss - DD/MM/YYYY'),
+			address: airQuality.getAddress(),
+			deviceId: this.props.deviceId,
+		}
+		// console.log(data.deviceId);
+
+		return (
+			<TouchableOpacity 
+				style={[styles.container, styles.containerShadow, this.props.outerLayout]}
+				activeOpacity={0.8}
+				onPress={() =>{
+					this.props.navigation.navigate('AQIDetailsScreen', {data: data});
+				}}>
+				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackgroundColor()]}>
+					<Text style={styles.textStatus}>{airQuality.getStatus()}</Text>
+					<FaceStatus status={airQuality.getLevelOfAqi()} style={styles.faceStatus}/>
+					<View>
+						<Text style={styles.aqiNumber}>{airQuality.getAqi()}</Text>
+						<Text style={styles.aqiUnit}>US AQI</Text>
+					</View>
+				</View>
+				<View style={styles.rightInfoWrapper}>
+					<View style={styles.rightInfoWrapperHeader}>
+						<Text style={styles.location1}>{airQuality.getAddress()}</Text>
+						<Text style={styles.location2}>Hà Nội, Việt Nam</Text>
+						<View style={styles.content}>
+							<Text style={styles.location2}><Ionicons name={'thermometer-outline'} size={25} color={'red'} /> {airQuality.getTemperature()} °C</Text>
+							<Text style={styles.location2}><Ionicons name={'ios-water'} size={27} color={'#00B2BF'} />{airQuality.getHumidity()}%</Text>
+						</View>
+					</View>
+					<View style={styles.rightInfoWrapperFooter}>
+						<Text style={styles.time}>{moment(airQuality.getTime()).format('HH:mm:ss - DD/MM/YYYY')}</Text>
+						<Icon style={styles.angleRight} name="angle-right" size={15}/>
+					</View>
+				</View>
+			</TouchableOpacity>
+		);
+	}
+}
 
 const styles = StyleSheet.create({
 	container: {
@@ -37,7 +115,8 @@ const styles = StyleSheet.create({
 	textStatus: {
 		fontSize: 14,
 		fontWeight: '700',
-		textAlign: 'center'
+		textAlign: 'center',
+		// color: 'black',
 	},
 	faceStatus: {
 		marginTop: 12
@@ -45,7 +124,8 @@ const styles = StyleSheet.create({
 	aqiNumber: {
 		fontSize: 23,
 		fontWeight: '700',
-		textAlign: 'center'
+		textAlign: 'center',
+		// color: 'black',
 	},
 	aqiUnit: {
 		fontSize: 10,
@@ -58,7 +138,8 @@ const styles = StyleSheet.create({
 		paddingVertical: 8
 	},
 	rightInfoWrapperHeader: {
-		flexGrow: 1
+		flexGrow: 1,
+		// backgroundColor: 'red'
 	},
 	location1: {
 		fontWeight: 'bold',
@@ -78,63 +159,12 @@ const styles = StyleSheet.create({
 	angleRight: {
 		position: 'absolute',
 		right: 3
+	},
+	content:{
+		flexDirection: 'row',
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		marginRight: 30
 	}
 });
-
-export class Card extends React.Component {
-	airQuality = null;
-
-	getLeftInfoWrapperBackgroundColor() {
-		let aqiColor;
-		switch (this.airQuality.getLevelOfAqi()) {
-			case 0:
-				aqiColor = Colors.GOOD; break;
-			case 1:
-				aqiColor = Colors.MODERATE; break;
-			case 2:
-				aqiColor = Colors.UNHEALTHY_1; break;
-			case 3:
-				aqiColor = Colors.UNHEALTHY_2; break;
-			case 4:
-				aqiColor = Colors.UNHEALTHY_3; break;
-			case 5:
-				aqiColor = Colors.HAZARDOUS; break;
-		}
-		return {
-			backgroundColor: aqiColor
-		}
-	}
-
-	render() {
-		console.log('Card component renders');
-		this.airQuality = new AirQuality(this.props.data);
-		let airQuality = this.airQuality;
-		// const { navigation } = this.props;
-
-		return (
-			<TouchableOpacity 
-				style={[styles.container, styles.containerShadow, this.props.outerLayout]} 
-				activeOpacity={0.7} 
-				onPress={() =>{ this.props.navigation.navigate('DetailsInforScreen')}}>
-				<View style={[styles.leftInfoWrapper, this.getLeftInfoWrapperBackgroundColor()]}>
-					<Text style={styles.textStatus}>{airQuality.getStatus()}</Text>
-					<FaceStatus status={airQuality.getLevelOfAqi()} style={styles.faceStatus}/>
-					<View>
-						<Text style={styles.aqiNumber}>{airQuality.getAqi()}</Text>
-						<Text style={styles.aqiUnit}>US AQI</Text>
-					</View>
-				</View>
-				<View style={styles.rightInfoWrapper}>
-					<View style={styles.rightInfoWrapperHeader}>
-						<Text style={styles.location1}>{airQuality.getLocation()['longitude']}</Text>
-						<Text style={styles.location2}>{airQuality.getLocation()['latitude']}</Text>
-					</View>
-					<View style={styles.rightInfoWrapperFooter}>
-						<Text style={styles.time}>{airQuality.getTime()}</Text>
-						<Icon style={styles.angleRight} name="angle-right" size={15}/>
-					</View>
-				</View>
-			</TouchableOpacity>
-		);
-	}
-}

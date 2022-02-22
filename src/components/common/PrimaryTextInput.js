@@ -10,7 +10,7 @@ import {
   Text,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
-import {Colors} from '../../../shared/colors/index';
+import {Colors} from '@shared/colors/index';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 

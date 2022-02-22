@@ -16,16 +16,20 @@ import { useNavigation } from '@react-navigation/core';
 interface CardStyleProps{
     view?: [];
     AQI?: string;
+    temperature?: string;
+    humidity?: string;
+    time?: string;
+    address?: string;
 }
 
 const CardDetails = (props: CardStyleProps) => {
-    const { view, AQI } = props;
+    const { view, AQI, temperature, humidity, time, address } = props;
     const navigation = useNavigation();
 
     return (
         <View style={styles.AQIView}>
             <View style={styles.locationView}>
-                <Text style={styles.locationText}>Địa chỉ đặt thiết bị</Text>
+                <Text style={styles.locationText}>{address}</Text>
                 <Text style={{color: 'black'}}>Hà Nội, Việt Nam</Text>
             </View>
             <LinearGradient colors={[view.color,"#ffffff"]}>
@@ -39,7 +43,7 @@ const CardDetails = (props: CardStyleProps) => {
                         </View>
                         <View style={[styles.betweenRetangle,{ backgroundColor: view.color}]}>
                             <Text style={{ color: 'black', fontSize: 30, fontWeight: '500' }}>{AQI}</Text>
-                            <Text style={{ color: 'black', fontSize: 10 }}>AQI VN</Text>
+                            <Text style={{ color: 'black', fontSize: 10 }}>AQI US</Text>
                         </View>
                         <View style={[styles.rightRetangle,{ backgroundColor: view.color}]}>
                             <Text style={[styles.text]}>{view.description}</Text>
@@ -49,16 +53,16 @@ const CardDetails = (props: CardStyleProps) => {
                     <View style={styles.rectangleBottomView}>
                         <View style={styles.viewBottom}>
                             <Ionicons name={'thermometer-outline'} size={25} color={'red'} />
-                            <Text style={styles.text1}>21 °C</Text>
+                            <Text style={styles.text1}>{temperature} °C</Text>
                         </View>
                         <View style={styles.viewBottom}>
                             <Ionicons name={'ios-water'} size={27} color={'#00B2BF'} />
-                            <Text style={styles.text1}>53%</Text>
+                            <Text style={styles.text1}>{humidity}%</Text>
                         </View>
                     </View>
                 </View>
                 <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 5, }}>
-                    <Text style={{ fontSize: 14, color: 'black'}}>Cập nhật mới nhất 19:00</Text>
+                    <Text style={{ fontSize: 14, color: 'black'}}>Cập nhật mới nhất {time}</Text>
                 </View>
             </LinearGradient>
         </View>

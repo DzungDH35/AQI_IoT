@@ -13,7 +13,8 @@ module.exports = {
           '@features': './src/features/',
           '@components': './src/components/',
           '@navigation': './src/navigation/',
-          '@models': './src/models/'
+          '@models': './src/models/',
+          '@context': './src/context/',
         }
       }
     ]

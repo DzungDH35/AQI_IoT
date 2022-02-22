@@ -9,11 +9,14 @@ import {
 import { Card } from '@components/card/Card';
 import { Colors } from '@shared/colors/index';
 import MQTT from 'sp-react-native-mqtt';
+import Header from '@components/header/Header';
 
 const styles = StyleSheet.create({
 	loading: {
-		flex: 1,
+		// flex: 1,
 		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 250
 	},
 	list: {
 		paddingBottom: 14,
@@ -22,6 +25,11 @@ const styles = StyleSheet.create({
 	listItem: {
 		marginTop: 14,
 	},
+	loadingText:{
+		color: 'black',
+		fontSize: 16,
+		marginBottom: 14,
+	}
 });
 
 class Location extends React.Component {
@@ -31,7 +39,7 @@ class Location extends React.Component {
 	});
 
 	constructor(props) {
-		console.log('Location fragment constructs');
+		// console.log('Location fragment constructs');
 		super(props);
 		this.state = {
 			data: []
@@ -40,20 +48,20 @@ class Location extends React.Component {
 		this.mqttClient
 			.then(client => {
 				client.on('connect', () => {
-					console.log('MQTT Connection is successful');
-					client.subscribe('/aqi', 2);
+					// console.log('MQTT Connection is successful');
+					client.subscribe('/aqi/#', 2);
 				});
 
 				client.on('message', msg => {
 					let dataObj = JSON.parse(msg.data);
-
+					// console.log(dataObj.deviceId);
 					if (Object.keys(dataObj).length !== 0) {
 						this.updateCurrentData(dataObj);
 					}
 				});
 
 				client.on('closed', () => {
-					console.log('MQTT Connection is closed');
+					// console.log('MQTT Connection is closed');
 					MQTT.removeClient(client);
 				});
 
@@ -69,28 +77,37 @@ class Location extends React.Component {
 	}
 
 	componentWillUnmount() {
-		console.log('Location fragment unmounts');
+		// console.log('Location fragment unmounts');
 		this.mqttClient.then(client => {
 			client.disconnect();
 		});
 	}
+		
 
 	render() {
-		console.log('Location fragment renders');
-		return this.state.data.length === 0 ? (
-			<View style={styles.loading}>
-				<ActivityIndicator size="large" color={Colors.LIGHT_BLUE} />
+		// console.log('Location fragment renders');
+		
+		return (
+			<View style={{flex: 1}}>
+      			<Header />
+				{this.state.data.length == 0 ? 
+					(
+						<View style={styles.loading}>
+							<Text style={styles.loadingText}>Đang tìm kiếm các trạm...</Text>
+							<ActivityIndicator size="large" color={Colors.PRIMARY_COLOR} />
+						</View>
+					) : (
+						<FlatList
+							contentContainerStyle={styles.list}
+							data={this.state.data}
+							renderItem={({ item }) => (
+								<Card outerLayout={styles.listItem} {...item} navigation={this.props.navigation}/>
+							)}
+							keyExtractor={(item) => item.deviceId}
+						/>
+					)}
 			</View>
-		) : (
-			<FlatList
-				contentContainerStyle={styles.list}
-				data={this.state.data}
-				renderItem={({ item }) => (
-					<Card outerLayout={styles.listItem} {...item}/>
-				)}
-				keyExtractor={(item) => item.deviceId}
-			/>
-		);
+		)
 	}
 
 	updateCurrentData(newPiece) {

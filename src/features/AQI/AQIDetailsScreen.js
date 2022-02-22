@@ -8,18 +8,16 @@ import CardDetails from '@components/card/CardDetails';
 import ListPollutants from '@components/listPollutants/ListPollutants';
 import Chart from '@components/chart/Chart';
 
-const AQIScreen = ({navigation}) => {
+const AQIScreen = ({navigation, route}) => {
+  const data = route.params.data;
+  // console.log(data.deviceId);
   const [view, setView] = useState();
-  const [AQI, setAQI] = useState(null);
-
   useEffect(() => {
-    const aqi = Math.floor(Math.random() * 501);
-    setAQI(aqi);
-    setView(viewAQI(AQI));
+    setView(viewAQI(data.aqi));
   }, []);
   return (
     <View style={{flex: 1}}>
-      <Header showBackIcon />
+      <Header showBackIcon onPress={()=>{navigation.goBack()}}/>
       {view == undefined ? (
         <ActivityIndicator
           size={'large'}
@@ -30,11 +28,18 @@ const AQIScreen = ({navigation}) => {
         <ScrollView
           style={styles.container}
           showsVerticalScrollIndicator={false}>
-          <CardDetails view={view} AQI={AQI} />
+          <CardDetails 
+            view={view} 
+            AQI={data.aqi} 
+            temperature={data.temperature} 
+            humidity={data.humidity} 
+            time={data.time}
+            address={data.address}
+          />
           {/* AQI tổng quan */}
-          <ListPollutants />
+          <ListPollutants CO={data.co} PM2_5={data.pm25}/>
           {/* Các Chất gây ô nhiễm */}
-          <Chart />
+          <Chart deviceId={data.deviceId}/>
           {/* BIỂU ĐỒ AQI VÀ CÁC CHẤT KHÁC */}
         </ScrollView>
       )}

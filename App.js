@@ -7,19 +7,17 @@ import {Header} from '@components/header/Header';
 import DetailsInforScreen from '@features/AQI/DetailsInforScreen';
 import InforAQIScreen from '@features/AQI/InforAQIScreen';
 import AQIDetailsScreen from '@features/AQI/AQIDetailsScreen';
-// import LoginScreen from '@features/auth/LoginScreen'
-// import SignUpScreen from '@features/auth/SignUpScreen';
 import MainStack from '@navigation/main/MainStack';
+import { useNavigation } from '@react-navigation/native';
+import ContextWrapper from "@context/ContextWrapper";
+
 
 const Stack = createStackNavigator();
-LogBox.ignoreLogs([
-  'If you want to use Reanimated 2 then go through our installation steps https://docs.swmansion.com/react-native-reanimated/docs/installation',
-]);
+LogBox.ignoreAllLogs();
 
-const App = () => {
+function App ()  {
   return (
     <NavigationContainer>
-      {/* <Header /> */}
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -52,4 +50,12 @@ const App = () => {
   );
 };
 
-export default App;
+function Main() {
+  return (
+    <ContextWrapper>
+      <App />
+    </ContextWrapper>
+  );
+}
+
+export default Main;

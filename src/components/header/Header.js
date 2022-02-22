@@ -14,7 +14,7 @@ const Header = (props: StyledHeaderProps) => {
   const navigation = useNavigation();
   const {showBackIcon, onPress} = props;
   return (
-    <View style={styles.container}>
+    <View style={styles.header}>
       {showBackIcon && (
         <TouchableOpacity style={styles.backBtn} onPress={onPress}>
           <Ionicons
@@ -24,12 +24,13 @@ const Header = (props: StyledHeaderProps) => {
           />
         </TouchableOpacity>
       )}
-      <View style={styles.logoView}>
+      <View style={[styles.logoView, {justifyContent: showBackIcon ? 'center' : undefined}]}>
         <Image
-          source={require('@assets/logo.png')}
+          source={require('@assets/logoImage.png')}
           style={styles.logo}
           resizeMode="center"
         />
+        <Text style={styles.logoText}>AQIOT</Text>
       </View>
       <TouchableOpacity
         style={styles.backBtn}
@@ -45,31 +46,36 @@ const Header = (props: StyledHeaderProps) => {
 };
 
 const styles = ScaledSheet.create({
-  container: {
+  header: {
     alignItems: 'center',
-    backgroundColor: Colors.SECONDARY_COLOR,
-    paddingVertical: 10,
-    flexDirection: 'row',
-    paddingHorizontal: '5@s',
-    backgroundColor: 'white',
+    height: '50@s',
     borderBottomWidth: '0.8@s',
-    borderBottomColor: Colors.PRIMARY_COLOR,
-  },
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingHorizontal: '5@s',
+},
   logo: {
-    aspectRatio: 822 / 251,
+    aspectRatio: 1,
     height: 40,
     width: undefined,
   },
   logoView: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: '5@s',
   },
   backBtn: {
     width: '30@s',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  logoText: {
+    fontSize: 24,
+    color: 'black',
+    fontWeight: 'bold',
+    marginLeft: '10@s',
+  }
 });
 
 export default Header;

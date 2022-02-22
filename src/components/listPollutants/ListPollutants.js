@@ -11,8 +11,13 @@ import { scale, ScaledSheet } from 'react-native-size-matters';
 import { Colors } from '@shared/colors';
 import { useNavigation } from '@react-navigation/native';
 
-const listPollutants = () => {
+interface StyledHeaderProps {
+    CO?: number;
+    PM2_5?: number;
+}
+const listPollutants = (props: StyledHeaderProps) => {
     const navigation = useNavigation();
+    const {CO, PM2_5} = props;
     return (
         <View style={styles.pollutantsView} >
             <View style={styles.headerTextView}>
@@ -30,7 +35,7 @@ const listPollutants = () => {
                             size={20} />
                         <View style={styles.txtDetails}>
                             <Text style={styles.pollutantsDetailsText}>CO (μm/m3)</Text>
-                            <Text style={styles.numberDetailsText}>69.9</Text>
+                            <Text style={styles.numberDetailsText}>{CO}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -44,7 +49,7 @@ const listPollutants = () => {
                             size={20} />
                         <View style={[styles.txtDetails, { borderLeftColor: 'green' }]}>
                             <Text style={styles.pollutantsDetailsText}>PM2.5 (μm/m3)</Text>
-                            <Text style={styles.numberDetailsText}>96.6</Text>
+                            <Text style={styles.numberDetailsText}>{PM2_5}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -89,7 +94,7 @@ const styles = ScaledSheet.create({
     txtDetails: {
         marginLeft: 5,
         borderLeftWidth: 4,
-        borderLeftColor: 'red',
+        borderLeftColor: 'green',
         paddingLeft: 15
     },
 });

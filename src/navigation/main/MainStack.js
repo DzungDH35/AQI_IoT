@@ -6,11 +6,11 @@ import { Colors } from '@shared/colors/index';
 import { scale } from 'react-native-size-matters';
 import HomeStack from '@navigation/main/home/HomeStack';
 import MapStack from '@navigation/main/map/MapStack';
-import AccountStack from '@navigation/main/account/AccountStack';
+import SettingStack from '@navigation/main/setting/SettingStack';
 
 const BottomTab = createBottomTabNavigator();
 
-const MainStack = () => {
+const MainStack = ({ navigation }) => {
 	return (
 		<BottomTab.Navigator
 			initialRouteName={'Home'}
@@ -37,8 +37,8 @@ const MainStack = () => {
 						iconName = focused ? 'bar-chart' : 'bar-chart-outline';
 						labelName = 'Thống kê';
 					} else {
-						iconName = focused ? 'person' : 'person-outline';
-						labelName = 'Tôi';
+						iconName = focused ? 'settings' : 'settings-outline';
+						labelName = 'Cài đặt';
 					}
 					return (
 						<View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -61,7 +61,7 @@ const MainStack = () => {
 			})}>
 			<BottomTab.Screen name="Home" component={HomeStack} />
 			<BottomTab.Screen name="Map" component={MapStack} />
-			{/* <BottomTab.Screen name="Account" component={AccountStack} /> */}
+			<BottomTab.Screen name="Setting" component={SettingStack} />
 		</BottomTab.Navigator>
 	);
 };

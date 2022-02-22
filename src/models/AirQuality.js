@@ -10,6 +10,8 @@ export class AirQuality {
 	aqi = '';
 	location = {};
 	time = '';
+	address = '';
+	deviceId = '';
 
 	constructor(data = {}) {
 		this.setSo2(data['so2']);
@@ -23,6 +25,8 @@ export class AirQuality {
 		this.setLocation(data['location']);
 		this.setTime(data['time']);
 		this.setAqi(aqiCalculator.pm25(data['pm2_5']));
+		this.setAddress(data['address']);
+		this.setDeviceId(data['deviceId']);
 	}
 
 	getSo2() { return this.pollutants['so2']; }
@@ -60,6 +64,12 @@ export class AirQuality {
 
 	getTime() { return this.time; }
 	setTime(time) { this.time = time; }
+
+	setAddress(address) { this.address = address; }
+	getAddress() { return this.address; }
+
+	getDeviceId() { return this.deviceId; }
+	setDeviceId(deviceId) { this.deviceId = deviceId; }
 
 	/**
 	  * Determine level of concerns based on AQI:
